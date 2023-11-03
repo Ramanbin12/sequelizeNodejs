@@ -2,7 +2,7 @@ const messages={
  SUCCESS_STATUS:200,
 ERROR_STATUS:500,
 OK_STATUS:201,
- INSERT_MESSAGE:"Inserted Successfully",
+ INSERT_MESSAGE:"User Inserted Successfully",
 UPDATE_MESSAGE:"updated Successfully",
 DELETE_MESSAGE:"deleted Successfully",
  SELECT_MESSAGE:"selected Successfully",

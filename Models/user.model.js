@@ -1,8 +1,16 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes} = require('sequelize');
+const {} = require("../");
+const sequelize = require('../database/dataSource');
 
 console.log('User Model');
-// const sequelize=require("../database/dataSource")
-global.student = sequelize.define('students', {
+const student = sequelize.define('students', {
+        id:{ 
+        type:DataTypes.INTEGER,
+        unique:true,
+        primaryKey:true,
+        
+    },
+
     firstName: {
         type: DataTypes.STRING,
         allowNull: false
@@ -14,7 +22,7 @@ global.student = sequelize.define('students', {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: 'email'
     },
     grade: {
         type: DataTypes.INTEGER,
@@ -23,18 +31,21 @@ global.student = sequelize.define('students', {
     age: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true
     },
     gender: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
     },
     mobileNumber: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: 'password'
     },
 })
 
-// module.exports=studentrecord
+
+module.exports=student;

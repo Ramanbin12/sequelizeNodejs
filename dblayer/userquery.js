@@ -1,7 +1,10 @@
-const mailExists = async (req,res) => {
-    const email=req.body.email
+const { Op } = require("sequelize")
+const student = require("../Models/user.model")
 
-    return await student.findOne({ where: { email} })
+const mailExists = async (req, res) => {
+    const email = req.body.email
+
+    return await student.findOne({ where: { email } })
 }
 
 // const selectuser = async () => {
@@ -16,32 +19,72 @@ const mailExists = async (req,res) => {
 //     console.log(options.order)
 //     return await student.findAll(options)
 // }
-const selectuser = (sort,order,options,limit,offset) => {
-    console.log(options.where)
-    if (options.where !== null) {
-        console.log(options.where);
-    } else {
-        console.log("No specific where condition provided.");
-    }
-    return student.findAll({
-        where:options.where,
-        order:[[sort,order]] ,
-        limit,offset
+const selectuser = async (limit, offset, placeholder, sort, q) => {
+    console.log("query by placeholder",q)
+    console.log('placeholder ', placeholder,q,sort);
+    
+    return await student.findAll({
+        limit,
+        offset,
+        // attributes:[
+        //     "firstName",
+        //     "LastName",
+        //     "age",
+        //     "mobileNumber"
+        // ],
+        where: 
+        {
+            ...placeholder,
+            [Op.or]: [
+                {
+                    firstName: {
+                        [Op.like]: `%${q}%`
+                    }
+                },
+                {
+                    LastName: {
+                        [Op.like]: `%${q}%`
+                    }
+                },
+                {
+                    age: {
+                        [Op.like]: `%${q}%`
+                    }
+                },
+                {
+                    mobileNumber: {
+                        [Op.like]: `%${q}%`
+                    }
+                },
+            ]
+        },
+        order: [sort],
     })
 }
-const insertuser = async (req, res) => {
-    const { firstName, LastName, email, grade ,age,gender,mobileNumber} = req.body
-    return await student.create({ firstName, LastName, email, grade,age,gender,mobileNumber })
+
+const insertuser = async (encryptedpassword,req) => {
+    const { firstName, LastName, email, grade, age, gender, mobileNumber } = req.body
+    console.log("data user level",firstName,LastName,email,age,grade,gender,mobileNumber)
+    return await student.create({ firstName, LastName, email, grade, age, gender, mobileNumber, password:encryptedpassword })
+
+    // try{
+    //     const user= await student.create({ firstName, LastName, email, grade, age, gender, mobileNumber, password:encryptedpassword })
+    //     console.log(user)
+    //     return user
+    // }
+    // catch(err){
+    //     console.log("error",err)
+    // }
 }
 
 const deleteuser = async () => {
-        return await student.destroy({ where: { id: 21 } })
+    return await student.destroy({ where: { id: 21 } })
 }
 const updateuser = async (req, res) => {
-        const { email, existmail } = req.body
-        const user = await student.findOne({ where: { email:existmail } })
-        user.email =email
-        return await user.save()
-    
+    const { email, existmail } = req.body
+    const user = await student.findOne({ where: { email: existmail } })
+    user.email = email
+    return await user.save()
+
 }
 module.exports = { selectuser, insertuser, deleteuser, updateuser, mailExists }

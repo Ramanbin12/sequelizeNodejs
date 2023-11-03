@@ -1,14 +1,13 @@
 const { Sequelize } = require("sequelize");
 const { host, user, password, database, dialect } = require("../config/dbConfig")
 const sequelize = new Sequelize(database, user, password, { host, dialect })
-global.sequelize=sequelize
+global.sequelize = sequelize
 // const usermodel = require("../Models/user.model");
 
 console.log('Data Source');
-
 const modelauthentication = async () => {
     try {
-        await student.sequelize.sync()
+        await sequelize.sync({alter :true});
         console.info("model sync with db")
     }
     catch (err) {
@@ -18,10 +17,10 @@ const modelauthentication = async () => {
 
 sequelize.authenticate().then(() => {
     console.info("connection with db successfully")
-    modelauthentication()
+    modelauthentication();
 
 }).catch((error) => {
     console.error("error", error)
 })
 
-// module.exports = sequelize;
+module.exports = sequelize;
