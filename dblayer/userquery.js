@@ -26,12 +26,7 @@ const selectuser = async (limit, offset, placeholder, sort, q) => {
     return await student.findAll({
         limit,
         offset,
-        // attributes:[
-        //     "firstName",
-        //     "LastName",
-        //     "age",
-        //     "mobileNumber"
-        // ],
+    
         where: 
         {
             ...placeholder,
@@ -78,7 +73,7 @@ const insertuser = async (encryptedpassword,req) => {
 }
 
 const deleteuser = async () => {
-    return await student.destroy({ where: { id: 21 } })
+    return await student.destroy({ where: { id: 5 } })
 }
 const updateuser = async (req, res) => {
     const { email, existmail } = req.body

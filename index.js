@@ -23,7 +23,7 @@ require("./Router/roleRouter/roleRouterapi")
 // }).catch((error) => {
 //     console.log(error)
 // })
-app.listen(5000, () => {
+app.listen(7000, () => {
     console.log("server connected")
 })
 // module.exports = app;

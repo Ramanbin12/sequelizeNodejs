@@ -1,6 +1,6 @@
 const responseHandler = require("../cors/ResponseHandler")
 const crypto=require("crypto")
-
+const cron=require("node-cron")
 // require('dotenv').config()
 const { selectuser, insertuser, deleteuser, updateuser, mailExists } = require("../dblayer/userquery")
 // const { SUCCESS_STATUS, ERROR_STATUS, OK_STATUS, INSERT_MESSAGE, UPDATE_MESSAGE, DELETE_MESSAGE, SELECT_MESSAGE, ALREADY_EXISTS, MISSING_RECORD } = require("../cors/Constant")
@@ -12,7 +12,7 @@ const { Op } = require("sequelize")
 const to = require("await-to-js").to
 
 const selectService = async (req, res) => {
-    console.log("gueryySSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS", req.query)
+    console.log("g", req.query)
     const q = req.query?.q ?? ""
     console.log("qrrr", q);
     const limit = parseInt(req.query?.limit ?? "10")
@@ -118,5 +118,10 @@ const updateService = async (req, res) => {
         return await responseHandler({ statusCode: messages.SUCCESS_STATUS, message: messages.UPDATE_MESSAGE, res, data })
     }
 }
+const taskservice=(req,res)=>{
+cron.schedule('* * * * * *',()=>{
+    console.log("running a task every minute")
+})
+}
 
-module.exports = { selectService, insertService, deleteService, updateService }
+module.exports = { selectService, insertService, deleteService, updateService,taskservice }

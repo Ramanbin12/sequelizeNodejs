@@ -1,4 +1,4 @@
-const { selectService, insertService, deleteService, updateService } = require("../services/selectServices")
+const { selectService, insertService, deleteService, updateService,taskservice } = require("../services/selectServices")
 const responseHandler = require("../cors/ResponseHandler")
 const {messages}=require("../cors/Constant")
 const Joi = require("joi")
@@ -52,4 +52,7 @@ const updateController = (req, res) => {
         updateService(req, res)
     }
 }
-module.exports = { selectController, insertController, deleteController, updateController }
+const taskscheduler=(req,res)=>{
+    taskservice(req,res)
+}
+module.exports = { selectController, insertController, deleteController, updateController, taskscheduler}

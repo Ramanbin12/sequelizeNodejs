@@ -23,8 +23,8 @@ const Role = sequelize.define('role', {
 )
 
 
-Role.hasMany(student, {
-  foreignKey: 'user_id'
-})
+// Role.hasMany(student, {
+//   foreignKey: 'user_id'
+// })
 
 module.exports = Role;
